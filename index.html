@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Hub - รพ.สต.บ้านคำใหญ่</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600&family=Kanit:wght@300;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --moph-green: #00a884;
+            --moph-dark: #00796b;
+            --nhso-blue: #2e86de;
+            --anamai-pink: #e84393;
+            --bg-color: #f4f7f6;
+            --card-shadow: 0 8px 15px rgba(0,0,0,0.08);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: var(--bg-color);
+            color: #2d3436;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--moph-green), var(--moph-dark));
+            color: white;
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo-area h1 { font-family: 'Kanit', sans-serif; font-size: 1.6rem; }
+        
+        .datetime-box {
+            text-align: right;
+            background: rgba(255,255,255,0.15);
+            padding: 8px 15px;
+            border-radius: 12px;
+            backdrop-filter: blur(4px);
+        }
+        #time { font-size: 1.3rem; font-weight: 600; display: block; }
+        #date { font-size: 0.85rem; opacity: 0.9; }
+
+        /* Container & Sections */
+        .container { max-width: 1200px; margin: 2rem auto; padding: 0 20px; }
+        
+        .section-title {
+            font-family: 'Kanit', sans-serif;
+            margin: 2.5rem 0 1.5rem;
+            padding-left: 15px;
+            border-left: 5px solid var(--moph-green);
+            color: var(--moph-dark);
+        }
+
+        /* Grid */
+        .link-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        /* Card Style */
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: var(--card-shadow);
+            border: 1px solid rgba(0,0,0,0.03);
+        }
+
+        .card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 12px 20px rgba(0,168,132,0.15);
+            border-color: var(--moph-green);
+        }
+
+        .card i {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--moph-green);
+        }
+
+        .card h3 { font-family: 'Kanit', sans-serif; font-size: 1.1rem; margin-bottom: 8px; }
+        .card p { font-size: 0.85rem; color: #636e72; }
+
+        /* Specific Colors for Portals */
+        .card.nhso i { color: var(--nhso-blue); }
+        .card.anamai i { color: var(--anamai-pink); }
+
+        footer {
+            text-align: center;
+            padding: 3rem;
+            color: #b2bec3;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            header { flex-direction: column; gap: 10px; text-align: center; }
+            .datetime-box { width: 100%; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-area">
+            <h1>รพ.สต.บ้านคำใหญ่</h1>
+            <p style="font-size: 0.8rem; font-weight: 300;">Kham Yai Health Center Digital Portal</p>
+        </div>
+        <div class="datetime-box">
+            <span id="time">00:00:00</span>
+            <span id="date">วันอาทิตย์ที่ 1 มีนาคม 2569</span>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <h2 class="section-title">ระบบบริหารจัดการ (Internal Apps)</h2>
+        <div class="link-grid">
+            <a href="https://kumyai2026.my.canva.site/" class="card" target="_blank">
+                <i class="fas fa-desktop"></i>
+                <h3>หน้าหลัก รพ.สต.</h3>
+                <p>ข้อมูลและข่าวสารทั่วไป</p>
+            </a>
+            <a href="https://moph-ksn.eoffice.go.th/api/auth/login" class="card" target="_blank">
+                <i class="fas fa-file-signature"></i>
+                <h3>e-Office สสจ.กส</h3>
+                <p>ระบบสารบรรณอิเล็กทรอนิกส์</p>
+            </a>
+            <a href="https://kumyai2026.my.canva.site/c2gzqrxxw6s5wjw0" class="card" target="_blank">
+                <i class="fas fa-notes-medical"></i>
+                <h3>ระบบงานบริการ</h3>
+                <p>ข้อมูลบริการทางการแพทย์</p>
+            </a>
+            <a href="https://kumyai2026.my.canva.site/c2acv1se5r64j7k2" class="card" target="_blank">
+                <i class="fas fa-boxes"></i>
+                <h3>ระบบสนับสนุน</h3>
+                <p>งานพัสดุและบริหารทั่วไป</p>
+            </a>
+        </div>
+
+        <h2 class="section-title">รายงานและฐานข้อมูล (Reports & NHSO)</h2>
+        <div class="link-grid">
+            <a href="https://hdc.moph.go.th/ksn/public/standard-report" class="card" target="_blank">
+                <i class="fas fa-database"></i>
+                <h3>HDC กาฬสินธุ์</h3>
+                <p>คลังข้อมูลสุขภาพ Standard Report</p>
+            </a>
+            <a href="https://eclaim.nhso.go.th/Client/login?url=%2Fhome" class="card nhso" target="_blank">
+                <i class="fas fa-money-check-alt"></i>
+                <h3>e-Claim NHSO</h3>
+                <p>ระบบเรียกเก็บค่าบริการ (สปสช.)</p>
+            </a>
+            <a href="https://serviceunit-nhsodp.nhso.go.th/login-not-permission?status=412" class="card nhso" target="_blank">
+                <i class="fas fa-user-check"></i>
+                <h3>NHSO Service Unit</h3>
+                <p>ตรวจสอบสิทธิและข้อมูล สปสช.</p>
+            </a>
+            <a href="https://kumyai2026.my.canva.site/c2q6vtrn31b6bj9w" class="card" target="_blank">
+                <i class="fas fa-chart-bar"></i>
+                <h3>สรุปสถิติจังหวัด</h3>
+                <p>แดชบอร์ดรายงานผลงาน</p>
+            </a>
+        </div>
+
+        <h2 class="section-title">งานส่งเสริมสุขภาพ (Health Promotion)</h2>
+        <div class="link-grid">
+            <a href="https://3doctor.hss.moph.go.th/main/login" class="card" target="_blank">
+                <i class="fas fa-user-nurse"></i>
+                <h3>ระบบ 3 หมอ</h3>
+                <p>ฐานข้อมูลหมอประจำครอบครัว</p>
+            </a>
+            <a href="https://bluebook.anamai.moph.go.th/" class="card anamai" target="_blank">
+                <i class="fas fa-book-medical"></i>
+                <h3>Blue Book</h3>
+                <p>ระบบคัดกรองผู้สูงอายุ (กรมอนามัย)</p>
+            </a>
+            <a href="https://sasukoonchai.anamai.moph.go.th/index.php" class="card anamai" target="_blank">
+                <i class="fas fa-heartbeat"></i>
+                <h3>สาสุขอุ่นใจ</h3>
+                <p>ระบบบันทึกงานส่งเสริมสุขภาพ</p>
+            </a>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; <span id="year"></span> โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านคำใหญ่</p>
+        <p>จังหวัดกาฬสินธุ์ | พัฒนาเพื่อการเข้าถึงงานบริการที่รวดเร็ว</p>
+    </footer>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const thaiDate = now.toLocaleDateString('th-TH', {
+                weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
+            });
+            const thaiTime = now.toLocaleTimeString('th-TH', {
+                hour: '2-digit', minute: '2-digit', second: '2-digit'
+            });
+
+            document.getElementById('date').innerText = thaiDate;
+            document.getElementById('time').innerText = thaiTime + " น.";
+            document.getElementById('year').innerText = now.getFullYear() + 543;
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+</html>
