@@ -13,6 +13,7 @@
             --moph-dark: #00796b;
             --nhso-blue: #2e86de;
             --anamai-pink: #e84393;
+            --home-orange: #f39c12;
             --bg-color: #f4f7f6;
             --card-shadow: 0 8px 15px rgba(0,0,0,0.08);
         }
@@ -25,7 +26,6 @@
             color: #2d3436;
         }
 
-        /* Header */
         header {
             background: linear-gradient(135deg, var(--moph-green), var(--moph-dark));
             color: white;
@@ -51,7 +51,6 @@
         #time { font-size: 1.3rem; font-weight: 600; display: block; }
         #date { font-size: 0.85rem; opacity: 0.9; }
 
-        /* Container & Sections */
         .container { max-width: 1200px; margin: 2rem auto; padding: 0 20px; }
         
         .section-title {
@@ -62,14 +61,12 @@
             color: var(--moph-dark);
         }
 
-        /* Grid */
         .link-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
             gap: 20px;
         }
 
-        /* Card Style */
         .card {
             background: white;
             padding: 20px;
@@ -100,9 +97,10 @@
         .card h3 { font-family: 'Kanit', sans-serif; font-size: 1.1rem; margin-bottom: 8px; }
         .card p { font-size: 0.85rem; color: #636e72; }
 
-        /* Specific Colors for Portals */
+        /* สีเฉพาะกลุ่ม */
         .card.nhso i { color: var(--nhso-blue); }
         .card.anamai i { color: var(--anamai-pink); }
+        .card.home-visit i { color: var(--home-orange); }
 
         footer {
             text-align: center;
@@ -126,12 +124,31 @@
         </div>
         <div class="datetime-box">
             <span id="time">00:00:00</span>
-            <span id="date">วันอาทิตย์ที่ 1 มีนาคม 2569</span>
+            <span id="date">วันพุธที่ 4 มีนาคม 2569</span>
         </div>
     </header>
 
     <div class="container">
         
+        <h2 class="section-title">งานเชิงรุกและเยี่ยมบ้าน (Outreach)</h2>
+        <div class="link-grid">
+            <a href="https://kumyai2026.my.canva.site/c31fdvjgphrdc394" class="card home-visit" target="_blank">
+                <i class="fas fa-house-user"></i>
+                <h3>บันทึกเยี่ยมบ้าน</h3>
+                <p>ระบบบันทึกการติดตามเยี่ยมกลุ่มเป้าหมาย</p>
+            </a>
+            <a href="https://kumyai2026.my.canva.site/c31ctbje563njr7z" class="card home-visit" target="_blank">
+                <i class="fas fa-users-cog"></i>
+                <h3>งานรุกชุมชน</h3>
+                <p>จัดการกิจกรรมเชิงรุกในพื้นที่</p>
+            </a>
+            <a href="https://kumyai2026.my.canva.site/c2thsqy5w3dfjm3e" class="card home-visit" target="_blank">
+                <i class="fas fa-map-marked-alt"></i>
+                <h3>แผนที่และข้อมูลพื้นที่</h3>
+                <p>พิกัดและข้อมูลรายหมู่บ้าน</p>
+            </a>
+        </div>
+
         <h2 class="section-title">ระบบบริหารจัดการ (Internal Apps)</h2>
         <div class="link-grid">
             <a href="https://kumyai2026.my.canva.site/" class="card" target="_blank">
@@ -203,7 +220,7 @@
 
     <footer>
         <p>&copy; <span id="year"></span> โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านคำใหญ่</p>
-        <p>จังหวัดกาฬสินธุ์ | พัฒนาเพื่อการเข้าถึงงานบริการที่รวดเร็ว</p>
+        <p>จังหวัดกาฬสินธุ์ | ระบบศูนย์รวมเครื่องมือดิจิทัล รพ.สต.</p>
     </footer>
 
     <script>
