@@ -24,6 +24,9 @@
             font-family: 'Sarabun', sans-serif;
             background-color: var(--bg-color);
             color: #2d3436;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         header {
@@ -51,7 +54,7 @@
         #time { font-size: 1.3rem; font-weight: 600; display: block; }
         #date { font-size: 0.85rem; opacity: 0.9; }
 
-        .container { max-width: 1200px; margin: 2rem auto; padding: 0 20px; }
+        .container { max-width: 1200px; margin: 2rem auto; padding: 0 20px; flex: 1; }
         
         .section-title {
             font-family: 'Kanit', sans-serif;
@@ -97,16 +100,44 @@
         .card h3 { font-family: 'Kanit', sans-serif; font-size: 1.1rem; margin-bottom: 8px; }
         .card p { font-size: 0.85rem; color: #636e72; }
 
-        /* สีเฉพาะกลุ่ม */
         .card.nhso i { color: var(--nhso-blue); }
         .card.anamai i { color: var(--anamai-pink); }
         .card.home-visit i { color: var(--home-orange); }
 
+        /* ปรับปรุง Footer ใหม่ */
         footer {
+            background-color: #ffffff;
             text-align: center;
-            padding: 3rem;
+            padding: 2.5rem 1rem;
+            margin-top: 4rem;
+            border-top: 4px solid var(--moph-green);
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.03);
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .footer-title {
+            font-family: 'Kanit', sans-serif;
+            color: var(--moph-dark);
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .footer-sub {
+            color: #636e72;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+
+        .copyright {
             color: #b2bec3;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
         }
 
         @media (max-width: 768px) {
@@ -124,7 +155,7 @@
         </div>
         <div class="datetime-box">
             <span id="time">00:00:00</span>
-            <span id="date">วันพุธที่ 4 มีนาคม 2569</span>
+            <span id="date">กำลังโหลด...</span>
         </div>
     </header>
 
@@ -219,8 +250,15 @@
     </div>
 
     <footer>
-        <p>&copy; <span id="year"></span> โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านคำใหญ่</p>
-        <p>จังหวัดกาฬสินธุ์ | ระบบศูนย์รวมเครื่องมือดิจิทัล รพ.สต.</p>
+        <div class="footer-content">
+            <div class="footer-title">โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านคำใหญ่</div>
+            <div class="footer-sub">
+                สำนักงานสาธารณสุขอำเภอห้วยเม็ก จังหวัดกาฬสินธุ์
+            </div>
+            <div class="copyright">
+                &copy; <span id="year"></span> All Rights Reserved | ระบบศูนย์รวมเครื่องมือดิจิทัลสาธารณสุข
+            </div>
+        </div>
     </footer>
 
     <script>
