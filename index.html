@@ -1,245 +1,732 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Hub - รพ.สต.บ้านคำใหญ่</title>
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;600&family=Kanit:wght@300;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <style>
-        :root {
-            --moph-green: #00a884;
-            --moph-dark: #00796b;
-            --nhso-blue: #2e86de;
-            --anamai-pink: #e84393;
-            --home-orange: #f39c12;
-            --bg-color: #f4f7f6;
-            --card-shadow: 0 8px 15px rgba(0,0,0,0.08);
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>รพ.สต.บ้านคำใหญ่ — ศูนย์แอปพลิเคชัน</title>
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600;700&family=Sarabun:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #050d14;
+    --bg2: #081820;
+    --teal: #00e5c8;
+    --teal2: #00bfa5;
+    --blue: #0af;
+    --gold: #ffc947;
+    --red: #ff4f6e;
+    --purple: #9b6dff;
+    --green: #39d98a;
+    --glass: rgba(0,229,200,0.06);
+    --glass-border: rgba(0,229,200,0.15);
+    --text: #e8f8f6;
+    --muted: rgba(232,248,246,0.5);
+  }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        body {
-            font-family: 'Sarabun', sans-serif;
-            background-color: var(--bg-color);
-            color: #2d3436;
-        }
+  html { scroll-behavior: smooth; }
 
-        header {
-            background: linear-gradient(135deg, var(--moph-green), var(--moph-dark));
-            color: white;
-            padding: 1.5rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Prompt', 'Sarabun', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
 
-        .logo-area h1 { font-family: 'Kanit', sans-serif; font-size: 1.6rem; }
-        
-        .datetime-box {
-            text-align: right;
-            background: rgba(255,255,255,0.15);
-            padding: 8px 15px;
-            border-radius: 12px;
-            backdrop-filter: blur(4px);
-        }
-        #time { font-size: 1.3rem; font-weight: 600; display: block; }
-        #date { font-size: 0.85rem; opacity: 0.9; }
+  /* ── BACKGROUND ── */
+  .bg-grid {
+    position: fixed; inset: 0; z-index: 0;
+    background-image:
+      linear-gradient(rgba(0,229,200,.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,200,.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+    animation: gridDrift 40s linear infinite;
+  }
+  @keyframes gridDrift { to { background-position: 48px 48px; } }
 
-        .container { max-width: 1200px; margin: 2rem auto; padding: 0 20px; }
-        
-        .section-title {
-            font-family: 'Kanit', sans-serif;
-            margin: 2.5rem 0 1.5rem;
-            padding-left: 15px;
-            border-left: 5px solid var(--moph-green);
-            color: var(--moph-dark);
-        }
+  .bg-glow {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(ellipse 60% 40% at 15% 20%, rgba(0,229,200,.12) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 35% at 85% 75%, rgba(0,170,255,.10) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 30% at 50% 50%, rgba(155,109,255,.06) 0%, transparent 70%);
+  }
 
-        .link-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-            gap: 20px;
-        }
+  /* ── FLOATING PARTICLES ── */
+  .particles { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+  .particle {
+    position: absolute; border-radius: 50%;
+    background: var(--teal); opacity: 0;
+    animation: floatUp var(--d, 8s) ease-in infinite;
+    animation-delay: var(--delay, 0s);
+    width: var(--s, 3px); height: var(--s, 3px);
+    left: var(--x, 50%); bottom: -10px;
+    filter: blur(0.5px);
+  }
+  @keyframes floatUp {
+    0%   { opacity: 0; transform: translateY(0) scale(1); }
+    10%  { opacity: 0.7; }
+    90%  { opacity: 0.3; }
+    100% { opacity: 0; transform: translateY(-100vh) scale(0.5); }
+  }
 
-        .card {
-            background: white;
-            padding: 20px;
-            border-radius: 15px;
-            text-decoration: none;
-            color: inherit;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            transition: all 0.3s ease;
-            box-shadow: var(--card-shadow);
-            border: 1px solid rgba(0,0,0,0.03);
-        }
+  /* ── LAYOUT ── */
+  .wrapper { position: relative; z-index: 1; max-width: 1280px; margin: 0 auto; padding: 0 24px 80px; }
 
-        .card:hover {
-            transform: translateY(-7px);
-            box-shadow: 0 12px 20px rgba(0,168,132,0.15);
-            border-color: var(--moph-green);
-        }
+  /* ── HEADER ── */
+  header {
+    padding: 48px 0 24px;
+    display: flex; align-items: center; gap: 24px;
+    border-bottom: 1px solid var(--glass-border);
+    margin-bottom: 48px;
+    animation: fadeDown .8s ease both;
+  }
+  .logo-ring {
+    width: 72px; height: 72px; flex-shrink: 0;
+    border-radius: 50%;
+    border: 2px solid var(--teal);
+    display: flex; align-items: center; justify-content: center;
+    background: var(--glass);
+    box-shadow: 0 0 24px rgba(0,229,200,.3), inset 0 0 16px rgba(0,229,200,.08);
+    position: relative;
+    animation: pulse 3s ease infinite;
+  }
+  .logo-ring::before {
+    content: '';
+    position: absolute; inset: -6px; border-radius: 50%;
+    border: 1px solid rgba(0,229,200,.2);
+    animation: spin 8s linear infinite;
+  }
+  .logo-ring svg { width: 36px; height: 36px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @keyframes pulse {
+    0%,100% { box-shadow: 0 0 24px rgba(0,229,200,.3), inset 0 0 16px rgba(0,229,200,.08); }
+    50%      { box-shadow: 0 0 40px rgba(0,229,200,.5), inset 0 0 24px rgba(0,229,200,.15); }
+  }
 
-        .card i {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-            color: var(--moph-green);
-        }
+  .header-text {}
+  .header-sub {
+    font-size: 11px; font-weight: 300; letter-spacing: 4px;
+    color: var(--teal); text-transform: uppercase; margin-bottom: 4px;
+  }
+  h1 {
+    font-size: clamp(18px, 3vw, 26px); font-weight: 700;
+    line-height: 1.2;
+    background: linear-gradient(135deg, #fff 0%, var(--teal) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .header-desc { font-size: 13px; color: var(--muted); margin-top: 4px; font-weight: 300; }
 
-        .card h3 { font-family: 'Kanit', sans-serif; font-size: 1.1rem; margin-bottom: 8px; }
-        .card p { font-size: 0.85rem; color: #636e72; }
+  .header-right { margin-left: auto; text-align: right; }
+  .live-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 11px; font-weight: 600; letter-spacing: 2px;
+    color: var(--green); text-transform: uppercase;
+  }
+  .live-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 8px var(--green);
+    animation: blink 1.5s ease infinite;
+  }
+  @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: .3; } }
+  .live-time { font-size: 22px; font-weight: 700; color: #fff; letter-spacing: 1px; margin-top: 4px; }
+  .live-date { font-size: 11px; color: var(--muted); }
 
-        /* สีเฉพาะกลุ่ม */
-        .card.nhso i { color: var(--nhso-blue); }
-        .card.anamai i { color: var(--anamai-pink); }
-        .card.home-visit i { color: var(--home-orange); }
+  /* ── SEARCH ── */
+  .search-wrap {
+    margin-bottom: 40px;
+    animation: fadeDown .8s ease .1s both;
+  }
+  .search-box {
+    display: flex; align-items: center; gap: 12px;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px; padding: 14px 20px;
+    backdrop-filter: blur(12px);
+    transition: border-color .3s, box-shadow .3s;
+  }
+  .search-box:focus-within {
+    border-color: var(--teal);
+    box-shadow: 0 0 20px rgba(0,229,200,.15);
+  }
+  .search-box svg { color: var(--teal); flex-shrink: 0; }
+  .search-box input {
+    flex: 1; background: none; border: none; outline: none;
+    color: var(--text); font-family: inherit; font-size: 15px;
+  }
+  .search-box input::placeholder { color: var(--muted); }
 
-        footer {
-            text-align: center;
-            padding: 3rem;
-            color: #b2bec3;
-            font-size: 0.9rem;
-        }
+  /* ── SECTION ── */
+  .section { margin-bottom: 48px; animation: fadeUp .6s ease both; }
+  .section-header {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 20px;
+  }
+  .section-icon {
+    width: 36px; height: 36px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .section-title { font-size: 15px; font-weight: 600; letter-spacing: .5px; }
+  .section-count {
+    margin-left: auto;
+    font-size: 11px; color: var(--muted);
+    background: var(--glass); border: 1px solid var(--glass-border);
+    border-radius: 20px; padding: 2px 10px;
+  }
+  .section-line {
+    flex: 1; height: 1px;
+    background: linear-gradient(90deg, var(--glass-border) 0%, transparent 100%);
+  }
 
-        @media (max-width: 768px) {
-            header { flex-direction: column; gap: 10px; text-align: center; }
-            .datetime-box { width: 100%; text-align: center; }
-        }
-    </style>
+  /* ── CARDS GRID ── */
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+
+  .card {
+    position: relative; overflow: hidden;
+    background: var(--glass);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 20px;
+    text-decoration: none; color: inherit;
+    backdrop-filter: blur(12px);
+    transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+    cursor: pointer;
+    display: flex; flex-direction: column; gap: 10px;
+    animation: cardIn .5s ease both;
+  }
+  .card:hover {
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: 0 16px 40px rgba(0,0,0,.4), 0 0 20px var(--c-glow, rgba(0,229,200,.2));
+    border-color: var(--c-accent, var(--teal));
+  }
+  .card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--c-accent, var(--teal)), transparent);
+    opacity: 0; transition: opacity .3s;
+  }
+  .card:hover::before { opacity: 1; }
+
+  .card-shine {
+    position: absolute; inset: 0; opacity: 0; pointer-events: none;
+    background: radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(255,255,255,.06) 0%, transparent 60%);
+    transition: opacity .3s;
+  }
+  .card:hover .card-shine { opacity: 1; }
+
+  .card-head { display: flex; align-items: flex-start; gap: 12px; }
+  .card-icon {
+    width: 44px; height: 44px; flex-shrink: 0; border-radius: 12px;
+    background: var(--c-bg, rgba(0,229,200,.12));
+    border: 1px solid var(--c-border, rgba(0,229,200,.2));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,.2);
+  }
+  .card-meta { flex: 1; min-width: 0; }
+  .card-name {
+    font-size: 13px; font-weight: 600; line-height: 1.3;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .card-tag {
+    font-size: 10px; font-weight: 400; color: var(--muted);
+    margin-top: 2px; letter-spacing: .5px;
+  }
+  .card-desc {
+    font-size: 12px; color: var(--muted); line-height: 1.5; font-weight: 300;
+    flex: 1;
+  }
+  .card-footer {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-top: 4px;
+  }
+  .card-badge {
+    font-size: 10px; font-weight: 600; letter-spacing: 1px;
+    padding: 3px 8px; border-radius: 20px;
+    background: var(--c-bg, rgba(0,229,200,.12));
+    color: var(--c-accent, var(--teal));
+    border: 1px solid var(--c-border, rgba(0,229,200,.2));
+  }
+  .card-arrow {
+    width: 28px; height: 28px; border-radius: 8px;
+    background: var(--c-bg, rgba(0,229,200,.12));
+    border: 1px solid var(--c-border, rgba(0,229,200,.2));
+    display: flex; align-items: center; justify-content: center;
+    transition: transform .2s, background .2s;
+  }
+  .card:hover .card-arrow {
+    transform: translate(2px, -2px);
+    background: var(--c-accent, var(--teal));
+    color: #000;
+  }
+
+  @keyframes cardIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── COLORS PER CATEGORY ── */
+  .c-teal  { --c-accent:#00e5c8; --c-glow:rgba(0,229,200,.25); --c-bg:rgba(0,229,200,.1); --c-border:rgba(0,229,200,.2); }
+  .c-blue  { --c-accent:#0af;    --c-glow:rgba(0,170,255,.25); --c-bg:rgba(0,170,255,.1); --c-border:rgba(0,170,255,.2); }
+  .c-gold  { --c-accent:#ffc947; --c-glow:rgba(255,201,71,.25); --c-bg:rgba(255,201,71,.1); --c-border:rgba(255,201,71,.2); }
+  .c-red   { --c-accent:#ff6b8a; --c-glow:rgba(255,107,138,.25); --c-bg:rgba(255,107,138,.1); --c-border:rgba(255,107,138,.2); }
+  .c-green { --c-accent:#39d98a; --c-glow:rgba(57,217,138,.25); --c-bg:rgba(57,217,138,.1); --c-border:rgba(57,217,138,.2); }
+  .c-purp  { --c-accent:#9b6dff; --c-glow:rgba(155,109,255,.25); --c-bg:rgba(155,109,255,.1); --c-border:rgba(155,109,255,.2); }
+  .c-orange { --c-accent:#ff8c47; --c-glow:rgba(255,140,71,.25); --c-bg:rgba(255,140,71,.1); --c-border:rgba(255,140,71,.2); }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center; padding: 32px 0;
+    border-top: 1px solid var(--glass-border);
+    color: var(--muted); font-size: 12px; font-weight: 300;
+  }
+  footer span { color: var(--teal); }
+
+  /* ── HIDDEN CARD ── */
+  .card.hidden { display: none; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    .cards { grid-template-columns: 1fr 1fr; }
+    header { flex-wrap: wrap; }
+    .header-right { width: 100%; text-align: left; margin-left: 0; }
+    .live-time { font-size: 18px; }
+  }
+  @media (max-width: 400px) {
+    .cards { grid-template-columns: 1fr; }
+  }
+</style>
 </head>
 <body>
 
-    <header>
-        <div class="logo-area">
-            <h1>รพ.สต.บ้านคำใหญ่</h1>
-            <p style="font-size: 0.8rem; font-weight: 300;">Kham Yai Health Center Digital Portal</p>
-        </div>
-        <div class="datetime-box">
-            <span id="time">00:00:00</span>
-            <span id="date">วันพุธที่ 4 มีนาคม 2569</span>
-        </div>
-    </header>
+<!-- Background -->
+<div class="bg-grid"></div>
+<div class="bg-glow"></div>
+<div class="particles" id="particles"></div>
 
-    <div class="container">
-        
-        <h2 class="section-title">งานเชิงรุกและเยี่ยมบ้าน (Outreach)</h2>
-        <div class="link-grid">
-            <a href="https://kumyai2026.my.canva.site/c31fdvjgphrdc394" class="card home-visit" target="_blank">
-                <i class="fas fa-house-user"></i>
-                <h3>บันทึกเยี่ยมบ้าน</h3>
-                <p>ระบบบันทึกการติดตามเยี่ยมกลุ่มเป้าหมาย</p>
-            </a>
-            <a href="https://kumyai2026.my.canva.site/c31ctbje563njr7z" class="card home-visit" target="_blank">
-                <i class="fas fa-users-cog"></i>
-                <h3>งานรุกชุมชน</h3>
-                <p>จัดการกิจกรรมเชิงรุกในพื้นที่</p>
-            </a>
-            <a href="https://kumyai2026.my.canva.site/c2thsqy5w3dfjm3e" class="card home-visit" target="_blank">
-                <i class="fas fa-map-marked-alt"></i>
-                <h3>แผนที่และข้อมูลพื้นที่</h3>
-                <p>พิกัดและข้อมูลรายหมู่บ้าน</p>
-            </a>
-        </div>
+<div class="wrapper">
 
-        <h2 class="section-title">ระบบบริหารจัดการ (Internal Apps)</h2>
-        <div class="link-grid">
-            <a href="https://kumyai2026.my.canva.site/" class="card" target="_blank">
-                <i class="fas fa-desktop"></i>
-                <h3>หน้าหลัก รพ.สต.</h3>
-                <p>ข้อมูลและข่าวสารทั่วไป</p>
-            </a>
-            <a href="https://moph-ksn.eoffice.go.th/api/auth/login" class="card" target="_blank">
-                <i class="fas fa-file-signature"></i>
-                <h3>e-Office สสจ.กส</h3>
-                <p>ระบบสารบรรณอิเล็กทรอนิกส์</p>
-            </a>
-            <a href="https://kumyai2026.my.canva.site/c2gzqrxxw6s5wjw0" class="card" target="_blank">
-                <i class="fas fa-notes-medical"></i>
-                <h3>ระบบงานบริการ</h3>
-                <p>ข้อมูลบริการทางการแพทย์</p>
-            </a>
-            <a href="https://kumyai2026.my.canva.site/c2acv1se5r64j7k2" class="card" target="_blank">
-                <i class="fas fa-boxes"></i>
-                <h3>ระบบสนับสนุน</h3>
-                <p>งานพัสดุและบริหารทั่วไป</p>
-            </a>
-        </div>
+  <!-- HEADER -->
+  <header>
+    <div class="logo-ring">
+      <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M18 4v28M4 18h28" stroke="#00e5c8" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="18" cy="18" r="13" stroke="#00e5c8" stroke-width="1.5" opacity=".4"/>
+        <circle cx="18" cy="18" r="5" fill="rgba(0,229,200,.3)" stroke="#00e5c8" stroke-width="1.5"/>
+      </svg>
+    </div>
+    <div class="header-text">
+      <div class="header-sub">รพ.สต. · Digital Hub · 2026</div>
+      <h1>บ้านคำใหญ่ แอปพลิเคชัน</h1>
+      <div class="header-desc">โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านคำใหญ่ &mdash; ระบบรวมแอปพลิเคชันดิจิทัล</div>
+    </div>
+    <div class="header-right">
+      <div class="live-badge"><div class="live-dot"></div>LIVE</div>
+      <div class="live-time" id="clock">00:00:00</div>
+      <div class="live-date" id="dateDisp"></div>
+    </div>
+  </header>
 
-        <h2 class="section-title">รายงานและฐานข้อมูล (Reports & NHSO)</h2>
-        <div class="link-grid">
-            <a href="https://hdc.moph.go.th/ksn/public/standard-report" class="card" target="_blank">
-                <i class="fas fa-database"></i>
-                <h3>HDC กาฬสินธุ์</h3>
-                <p>คลังข้อมูลสุขภาพ Standard Report</p>
-            </a>
-            <a href="https://eclaim.nhso.go.th/Client/login?url=%2Fhome" class="card nhso" target="_blank">
-                <i class="fas fa-money-check-alt"></i>
-                <h3>e-Claim NHSO</h3>
-                <p>ระบบเรียกเก็บค่าบริการ (สปสช.)</p>
-            </a>
-            <a href="https://serviceunit-nhsodp.nhso.go.th/login-not-permission?status=412" class="card nhso" target="_blank">
-                <i class="fas fa-user-check"></i>
-                <h3>NHSO Service Unit</h3>
-                <p>ตรวจสอบสิทธิและข้อมูล สปสช.</p>
-            </a>
-            <a href="https://kumyai2026.my.canva.site/c2q6vtrn31b6bj9w" class="card" target="_blank">
-                <i class="fas fa-chart-bar"></i>
-                <h3>สรุปสถิติจังหวัด</h3>
-                <p>แดชบอร์ดรายงานผลงาน</p>
-            </a>
-        </div>
+  <!-- SEARCH -->
+  <div class="search-wrap">
+    <div class="search-box">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+      </svg>
+      <input type="text" id="searchInput" placeholder="ค้นหาแอปพลิเคชัน..." oninput="filterCards(this.value)">
+    </div>
+  </div>
 
-        <h2 class="section-title">งานส่งเสริมสุขภาพ (Health Promotion)</h2>
-        <div class="link-grid">
-            <a href="https://3doctor.hss.moph.go.th/main/login" class="card" target="_blank">
-                <i class="fas fa-user-nurse"></i>
-                <h3>ระบบ 3 หมอ</h3>
-                <p>ฐานข้อมูลหมอประจำครอบครัว</p>
-            </a>
-            <a href="https://bluebook.anamai.moph.go.th/" class="card anamai" target="_blank">
-                <i class="fas fa-book-medical"></i>
-                <h3>Blue Book</h3>
-                <p>ระบบคัดกรองผู้สูงอายุ (กรมอนามัย)</p>
-            </a>
-            <a href="https://sasukoonchai.anamai.moph.go.th/index.php" class="card anamai" target="_blank">
-                <i class="fas fa-heartbeat"></i>
-                <h3>สาสุขอุ่นใจ</h3>
-                <p>ระบบบันทึกงานส่งเสริมสุขภาพ</p>
-            </a>
+  <!-- SECTION 1: ระบบสุขภาพ -->
+  <div class="section" style="animation-delay:.1s">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(0,229,200,.1);border:1px solid rgba(0,229,200,.2)">🏥</div>
+      <div class="section-title">ระบบสุขภาพดิจิทัล</div>
+      <div class="section-line"></div>
+      <div class="section-count">4 ระบบ</div>
+    </div>
+    <div class="cards">
+
+      <a href="https://3doctor.hss.moph.go.th/main/login" target="_blank" class="card c-teal" style="animation-delay:.15s">
+        <div class="card-shine"></div>
+        <div class="card-head">
+          <div class="card-icon">👨‍⚕️</div>
+          <div class="card-meta">
+            <div class="card-name">ระบบ 3 หมอ</div>
+            <div class="card-tag">3doctor.hss.moph.go.th</div>
+          </div>
         </div>
+        <div class="card-desc">ระบบดูแลสุขภาพประชาชน 3 หมอ กระทรวงสาธารณสุข</div>
+        <div class="card-footer">
+          <span class="card-badge">MOPH</span>
+          <div class="card-arrow">↗</div>
+        </div>
+      </a>
+
+      <a href="https://bluebook.anamai.moph.go.th/" target="_blank" class="card c-blue" style="animation-delay:.2s">
+        <div class="card-shine"></div>
+        <div class="card-head">
+          <div class="card-icon">📘</div>
+          <div class="card-meta">
+            <div class="card-name">สมุดสุขภาพ Blue Book</div>
+            <div class="card-tag">bluebook.anamai.moph.go.th</div>
+          </div>
+        </div>
+        <div class="card-desc">บันทึกสุขภาพอิเล็กทรอนิกส์ กรมอนามัย กระทรวงสาธารณสุข</div>
+        <div class="card-footer">
+          <span class="card-badge">อนามัย</span>
+          <div class="card-arrow">↗</div>
+        </div>
+      </a>
+
+      <a href="https://sasukoonchai.anamai.moph.go.th/index.php" target="_blank" class="card c-green" style="animation-delay:.25s">
+        <div class="card-shine"></div>
+        <div class="card-head">
+          <div class="card-icon">🌿</div>
+          <div class="card-meta">
+            <div class="card-name">สาสุขอุ่นใจ</div>
+            <div class="card-tag">sasukoonchai.anamai.moph.go.th</div>
+          </div>
+        </div>
+        <div class="card-desc">ระบบสาธารณสุขอุ่นใจ กรมอนามัย กระทรวงสาธารณสุข</div>
+        <div class="card-footer">
+          <span class="card-badge">อนามัย</span>
+          <div class="card-arrow">↗</div>
+        </div>
+      </a>
+
+      <a href="https://divisionksn.moph.go.th/cd/" target="_blank" class="card c-purp" style="animation-delay:.3s">
+        <div class="card-shine"></div>
+        <div class="card-head">
+          <div class="card-icon">🔬</div>
+          <div class="card-meta">
+            <div class="card-name">Division KSN</div>
+            <div class="card-tag">divisionksn.moph.go.th</div>
+          </div>
+        </div>
+        <div class="card-desc">ระบบโรคติดต่อ สำนักงานสาธารณสุขจังหวัดกาฬสินธุ์</div>
+        <div class="card-footer">
+          <span class="card-badge">KSN</span>
+          <div class="card-arrow">↗</div>
+        </div>
+      </a>
 
     </div>
+  </div>
 
-    <footer>
-        <p>&copy; <span id="year"></span> โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านคำใหญ่</p>
-        <p>จังหวัดกาฬสินธุ์ | ระบบศูนย์รวมเครื่องมือดิจิทัล รพ.สต.</p>
-    </footer>
+  <!-- SECTION 2: เว็บไซต์ รพ.สต. -->
+  <div class="section" style="animation-delay:.2s">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(255,201,71,.1);border:1px solid rgba(255,201,71,.2)">🌐</div>
+      <div class="section-title">เว็บไซต์ รพ.สต.บ้านคำใหญ่</div>
+      <div class="section-line"></div>
+      <div class="section-count">6 เว็บไซต์</div>
+    </div>
+    <div class="cards">
 
-    <script>
-        function updateClock() {
-            const now = new Date();
-            const thaiDate = now.toLocaleDateString('th-TH', {
-                weekday: 'long', day: 'numeric', month: 'long', year: 'numeric'
-            });
-            const thaiTime = now.toLocaleTimeString('th-TH', {
-                hour: '2-digit', minute: '2-digit', second: '2-digit'
-            });
+      <a href="https://kumyai2026.my.canva.site/" target="_blank" class="card c-gold" style="animation-delay:.25s">
+        <div class="card-shine"></div>
+        <div class="card-head">
+          <div class="card-icon">🏡</div>
+          <div class="card-meta">
+            <div class="card-name">เว็บไซต์หลัก คำใหญ่ 2026</div>
+            <div class="card-tag">kumyai2026.my.canva.site</div>
+          </div>
+        </div>
+        <div class="card-desc">เว็บไซต์หน้าหลัก รพ.สต.บ้านคำใหญ่ ประจำปี 2569</div>
+        <div class="card-footer">
+          <span class="card-badge">หน้าหลัก</span>
+          <div class="card-arrow">↗</div>
+        </div>
+      </a>
 
-            document.getElementById('date').innerText = thaiDate;
-            document.getElementById('time').innerText = thaiTime + " น.";
-            document.getElementById('year').innerText = now.getFullYear() + 543;
-        }
+      <a href="https://kumyai2026.my.canva.site/c2gzqrxxw6s5wjw0" target="_blank" class="card c-gold" style="animation-delay:.3s">
+        <div class="card-shine"></div>
+        <div class="card-head">
+          <div class="card-icon">📋</div>
+          <div class="card-meta">
+            <div class="card-name">คำใหญ่ 2026 · หน้า 2</div>
+            <div class="card-tag">kumyai2026.my.canva.site</div>
+          </div>
+        </div>
+        <div class="card-desc">เนื้อหาหน้าที่ 2 เว็บไซต์ รพ.สต.บ้านคำใหญ่</div>
+        <div class="card-footer">
+          <span class="card-badge">Canva</span>
+          <div class="card-arrow">↗</div>
+        </div>
+      </a>
 
-        setInterval(updateClock, 1000);
-        updateClock();
-    </script>
+      <a href="https://kumyai2026.my.canva.site/c2q6vtrn31b6bj9w" target="_blank" class="card c-gold" style="animation-delay:.35s">
+        <div class="card-shine"></div>
+        <div class="card-head">
+          <div class="card-icon">📄</div>
+          <div class="card-meta">
+            <div class="card-name">คำใหญ่ 2026 · หน้า 3</div>
+            <div class="card-tag">kumyai2026.my.canva.site</div>
+          </div>
+        </div>
+        <div class="card-desc">เนื้อหาหน้าที่ 3 เว็บไซต์ รพ.สต.บ้านคำใหญ่</div>
+        <div class="card-footer">
+          <span class="card-badge">Canva</span>
+          <div class="card-arrow">↗</div>
+        </div>
+      </a>
+
+      <a href="https://kumyai2026.my.canva.site/c2acv1se5r64j7k2" target="_blank" class="card c-gold" style="animation-delay:.4s">
+        <div class="card-shine"></div>
+        <div class="card-head">
+          <div class="card-icon">📑</div>
+          <div class="card-meta">
+            <div class="card-name">คำใหญ่ 2026 · หน้า 4</div>
+            <div class="card-tag">kumyai2026.my.canva.site</div>
+          </div>
+        </div>
+        <div class="card-desc">เนื้อหาหน้าที่ 4 เว็บไซต์ รพ.สต.บ้านคำใหญ่</div>
+        <div class="card-footer">
+          <span class="card-badge">Canva</span>
+          <div class="card-arrow">↗</div>
+        </div>
+      </a>
+
+      <a href="https://baanhospital-nfd9uese.manus.space/" target="_blank" class="card c-orange" style="animation-delay:.45s">
+        <div class="card-shine"></div>
+        <div class="card-head">
+          <div class="card-icon">🏨</div>
+          <div class="card-meta">
+            <div class="card-name">บ้านโรงพยาบาล</div>
+            <div class="card-tag">baanhospital.manus.space</div>
+          </div>
+        </div>
+        <div class="card-desc">เว็บไซต์ บ้านโรงพยาบาล รพ.สต.บ้านคำใหญ่ บน Manus Space</div>
+        <div class="card-footer">
+          <span class="card-badge">Manus</span>
+          <div class="card-arrow">↗</div>
+        </div>
+      </a>
+
+      <a href="https://sites.google.com/view/kumyaiphc2025/%E0%B8%AB%E0%B8%99%E0%B8%B2%E0%B9%81%E0%B8%A3%E0%B8%81" target="_blank" class="card c-orange" style="animation-delay:.5s">
+        <div class="card-shine"></div>
+        <div class="card-head">
+          <div class="card-icon">🔗</div>
+          <div class="card-meta">
+            <div class="card-name">Google Sites PHC 2025</div>
+            <div class="card-tag">sites.google.com/kumyaiphc2025</div>
+          </div>
+        </div>
+        <div class="card-desc">เว็บไซต์ Google Sites รพ.สต.คำใหญ่ ปี 2568</div>
+        <div class="card-footer">
+          <span class="card-badge">Google</span>
+          <div class="card-arrow">↗</div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- SECTION 3: ระบบเบิกจ่าย/สปสช. -->
+  <div class="section" style="animation-delay:.3s">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(255,107,138,.1);border:1px solid rgba(255,107,138,.2)">💊</div>
+      <div class="section-title">ระบบ สปสช. / เบิกจ่าย</div>
+      <div class="section-line"></div>
+      <div class="section-count">4 ระบบ</div>
+    </div>
+    <div class="cards">
+
+      <a href="https://ossregister.nhso.go.th/#/public-portal" target="_blank" class="card c-red" style="animation-delay:.35s">
+        <div class="card-shine"></div>
+        <div class="card-head">
+          <div class="card-icon">🆔</div>
+          <div class="card-meta">
+            <div class="card-name">OSS Register NHSO</div>
+            <div class="card-tag">ossregister.nhso.go.th</div>
+          </div>
+        </div>
+        <div class="card-desc">ระบบลงทะเบียนสิทธิ์บัตรทอง สำนักงานหลักประกันสุขภาพแห่งชาติ</div>
+        <div class="card-footer">
+          <span class="card-badge">สปสช.</span>
+          <div class="card-arrow">↗</div>
+        </div>
+      </a>
+
+      <a href="https://eclaim.nhso.go.th/Client/login?url=%2Fhome" target="_blank" class="card c-red" style="animation-delay:.4s">
+        <div class="card-shine"></div>
+        <div class="card-head">
+          <div class="card-icon">💳</div>
+          <div class="card-meta">
+            <div class="card-name">e-Claim NHSO</div>
+            <div class="card-tag">eclaim.nhso.go.th</div>
+          </div>
+        </div>
+        <div class="card-desc">ระบบการเรียกเก็บค่าบริการทางการแพทย์ สปสช.</div>
+        <div class="card-footer">
+          <span class="card-badge">สปสช.</span>
+          <div class="card-arrow">↗</div>
+        </div>
+      </a>
+
+      <a href="https://ltcnew.nhso.go.th/Default" target="_blank" class="card c-red" style="animation-delay:.45s">
+        <div class="card-shine"></div>
+        <div class="card-head">
+          <div class="card-icon">👴</div>
+          <div class="card-meta">
+            <div class="card-name">LTC New NHSO</div>
+            <div class="card-tag">ltcnew.nhso.go.th</div>
+          </div>
+        </div>
+        <div class="card-desc">ระบบดูแลผู้สูงอายุที่มีภาวะพึ่งพิง Long Term Care สปสช.</div>
+        <div class="card-footer">
+          <span class="card-badge">LTC</span>
+          <div class="card-arrow">↗</div>
+        </div>
+      </a>
+
+      <a href="http://edonation.rd.go.th/donate/PageMain.jsp" target="_blank" class="card c-green" style="animation-delay:.5s">
+        <div class="card-shine"></div>
+        <div class="card-head">
+          <div class="card-icon">🎁</div>
+          <div class="card-meta">
+            <div class="card-name">e-Donation กรมสรรพากร</div>
+            <div class="card-tag">edonation.rd.go.th</div>
+          </div>
+        </div>
+        <div class="card-desc">ระบบการรับบริจาคอิเล็กทรอนิกส์ กรมสรรพากร</div>
+        <div class="card-footer">
+          <span class="card-badge">สรรพากร</span>
+          <div class="card-arrow">↗</div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- SECTION 4: ระบบบริหาร/สำนักงาน -->
+  <div class="section" style="animation-delay:.4s">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(155,109,255,.1);border:1px solid rgba(155,109,255,.2)">🗂️</div>
+      <div class="section-title">ระบบบริหาร / สำนักงาน</div>
+      <div class="section-line"></div>
+      <div class="section-count">3 ระบบ</div>
+    </div>
+    <div class="cards">
+
+      <a href="https://moph-ksn.eoffice.go.th/api/auth/login" target="_blank" class="card c-purp" style="animation-delay:.45s">
+        <div class="card-shine"></div>
+        <div class="card-head">
+          <div class="card-icon">📬</div>
+          <div class="card-meta">
+            <div class="card-name">e-Office สธ.สกลนคร</div>
+            <div class="card-tag">moph-ksn.eoffice.go.th</div>
+          </div>
+        </div>
+        <div class="card-desc">ระบบสำนักงานอิเล็กทรอนิกส์ กระทรวงสาธารณสุข สกลนคร</div>
+        <div class="card-footer">
+          <span class="card-badge">e-Office</span>
+          <div class="card-arrow">↗</div>
+        </div>
+      </a>
+
+      <a href="https://script.google.com/macros/s/AKfycbxHZlqN5GdCWScm3kubLU2wxDYlejQHK4mc_wOE7eGSFSCVwAHqIIkiGPl0jocyUQQ/exec" target="_blank" class="card c-teal" style="animation-delay:.5s">
+        <div class="card-shine"></div>
+        <div class="card-head">
+          <div class="card-icon">📊</div>
+          <div class="card-meta">
+            <div class="card-name">Google Script · ระบบ 1</div>
+            <div class="card-tag">script.google.com</div>
+          </div>
+        </div>
+        <div class="card-desc">แอปพลิเคชัน Google Apps Script สำหรับการจัดการข้อมูล รพ.สต.</div>
+        <div class="card-footer">
+          <span class="card-badge">Apps Script</span>
+          <div class="card-arrow">↗</div>
+        </div>
+      </a>
+
+      <a href="https://script.google.com/macros/s/AKfycbxYDjQDjPMS4LVTJRhBN1ZumNim3k1rHbYhMPib2DuESIyV7bYdAMldMaoNAdyW9fy3/exec" target="_blank" class="card c-teal" style="animation-delay:.55s">
+        <div class="card-shine"></div>
+        <div class="card-head">
+          <div class="card-icon">📈</div>
+          <div class="card-meta">
+            <div class="card-name">Google Script · ระบบ 2</div>
+            <div class="card-tag">script.google.com</div>
+          </div>
+        </div>
+        <div class="card-desc">แอปพลิเคชัน Google Apps Script สำหรับการรายงานข้อมูล รพ.สต.</div>
+        <div class="card-footer">
+          <span class="card-badge">Apps Script</span>
+          <div class="card-arrow">↗</div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2569 · <span>โรงพยาบาลส่งเสริมสุขภาพตำบลบ้านคำใหญ่</span> · ตำบลคำใหญ่ อำเภอห้วยเม็ก จังหวัดกาฬสินธุ์</p>
+    <p style="margin-top:6px;font-size:10px;opacity:.5;">Digital Health Hub · Powered by สาธารณสุขไทย</p>
+  </footer>
+
+</div>
+
+<script>
+  // Clock
+  function tick() {
+    const now = new Date();
+    document.getElementById('clock').textContent =
+      now.toLocaleTimeString('th-TH', {hour:'2-digit',minute:'2-digit',second:'2-digit'});
+    document.getElementById('dateDisp').textContent =
+      now.toLocaleDateString('th-TH', {weekday:'short', year:'numeric', month:'long', day:'numeric'});
+  }
+  tick(); setInterval(tick, 1000);
+
+  // Particles
+  const pc = document.getElementById('particles');
+  for (let i = 0; i < 30; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const s = Math.random() * 4 + 1;
+    p.style.cssText = `
+      --x:${Math.random()*100}%;
+      --s:${s}px;
+      --d:${Math.random()*10+6}s;
+      --delay:${Math.random()*10}s;
+      background:${Math.random()>.5?'#00e5c8':'#0af'};
+    `;
+    pc.appendChild(p);
+  }
+
+  // Card mouse shine
+  document.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const r = card.getBoundingClientRect();
+      const x = ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%';
+      const y = ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%';
+      card.querySelector('.card-shine').style.setProperty('--mx', x);
+      card.querySelector('.card-shine').style.setProperty('--my', y);
+    });
+  });
+
+  // Search filter
+  function filterCards(q) {
+    const query = q.toLowerCase().trim();
+    document.querySelectorAll('.card').forEach(card => {
+      const text = card.textContent.toLowerCase();
+      card.classList.toggle('hidden', query && !text.includes(query));
+    });
+  }
+</script>
 </body>
 </html>
+
